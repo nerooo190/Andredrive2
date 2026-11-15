@@ -1,0 +1,190 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net: Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Hardened Global Helpers
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isWorkspaceOwner(userId) {
+      return isSignedIn() &&
+        request.auth.uid == userId &&
+        exists(/databases/$(database)/documents/workspaces/$(userId)) &&
+        get(/databases/$(database)/documents/workspaces/$(userId)).data.ownerId == request.auth.uid;
+    }
+
+    // Entity Validation Blueprints
+    function isValidWorkspace(data) {
+      return data.keys().hasAll(['ownerId', 'displayName', 'rommServerUrl', 'rommFolderId', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly(['ownerId', 'displayName', 'rommServerUrl', 'rommFolderId', 'createdAt', 'updatedAt']) &&
+        data.ownerId is string && data.ownerId.size() >= 1 && data.ownerId.size() <= 128 && data.ownerId.matches('^[a-zA-Z0-9_\\-]+$') &&
+        data.ownerId == request.auth.uid &&
+        data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 120 &&
+        data.rommServerUrl is string && data.rommServerUrl.size() <= 500 &&
+        data.rommFolderId is string && data.rommFolderId.size() <= 128 &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidDriveFile(data, userId) {
+      return data.keys().hasAll(['ownerId', 'workspaceId', 'name', 'kind', 'mime', 'size', 'folder', 'starred', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly(['ownerId', 'workspaceId', 'name', 'kind', 'mime', 'size', 'folder', 'starred', 'createdAt', 'updatedAt']) &&
+        data.ownerId is string && data.ownerId.size() >= 1 && data.ownerId.size() <= 128 && data.ownerId.matches('^[a-zA-Z0-9_\\-]+$') &&
+        data.ownerId == request.auth.uid &&
+        data.workspaceId is string && data.workspaceId.size() >= 1 && data.workspaceId.size() <= 128 && data.workspaceId.matches('^[a-zA-Z0-9_\\-]+$') &&
+        data.workspaceId == userId &&
+        data.name is string && data.name.size() >= 1 && data.name.size() <= 255 &&
+        data.kind is string && data.kind.size() >= 1 && data.kind.size() <= 64 &&
+        data.mime is string && data.mime.size() >= 1 && data.mime.size() <= 128 &&
+        data.size is number && data.size >= 0 && data.size <= 1099511627776 &&
+        data.folder is string && data.folder.size() <= 128 &&
+        data.starred is bool &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidDriveFolder(data, userId) {
+      return data.keys().hasAll(['ownerId', 'workspaceId', 'name', 'parent', 'color', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly(['ownerId', 'workspaceId', 'name', 'parent', 'color', 'createdAt', 'updatedAt']) &&
+        data.ownerId is string && data.ownerId.size() >= 1 && data.ownerId.size() <= 128 && data.ownerId.matches('^[a-zA-Z0-9_\\-]+$') &&
+        data.ownerId == request.auth.uid &&
+        data.workspaceId is string && data.workspaceId.size() >= 1 && data.workspaceId.size() <= 128 && data.workspaceId.matches('^[a-zA-Z0-9_\\-]+$') &&
+        data.workspaceId == userId &&
+        data.name is string && data.name.size() >= 1 && data.name.size() <= 120 &&
+        data.parent is string && data.parent.size() <= 128 &&
+        data.color is string && data.color.size() >= 4 && data.color.size() <= 16 &&
+        data.color in ['green', 'purple', 'orange', 'blue'] &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    // Root Workspaces Collection
+    match /workspaces/{userId} {
+      allow get: if isSignedIn() && isValidId(userId) && request.auth.uid == userId && existing().ownerId == request.auth.uid;
+      allow list: if isSignedIn() && request.auth.uid == userId && existing().ownerId == request.auth.uid;
+
+      allow create: if isVerified() &&
+        isValidId(userId) &&
+        request.auth.uid == userId &&
+        isValidWorkspace(incoming()) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+
+      allow update: if isValidWorkspace(incoming()) &&
+        isVerified() &&
+        isValidId(userId) &&
+        request.auth.uid == userId &&
+        existing().ownerId == request.auth.uid &&
+        incoming().ownerId == existing().ownerId &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'rommServerUrl', 'rommFolderId', 'updatedAt']);
+
+      allow delete: if isVerified() &&
+        isValidId(userId) &&
+        request.auth.uid == userId &&
+        existing().ownerId == request.auth.uid;
+
+      // Drive Files Subcollection (Master Gate enforced)
+      match /files/{fileId} {
+        allow get: if isSignedIn() &&
+          isValidId(userId) &&
+          isValidId(fileId) &&
+          existing().ownerId == request.auth.uid &&
+          isWorkspaceOwner(userId);
+
+        allow list: if isSignedIn() &&
+          request.auth.uid == userId &&
+          existing().ownerId == request.auth.uid &&
+          existing().workspaceId == userId;
+
+        allow create: if isVerified() &&
+          isValidId(userId) &&
+          isValidId(fileId) &&
+          isValidDriveFile(incoming(), userId) &&
+          incoming().createdAt == request.time &&
+          incoming().updatedAt == request.time &&
+          isWorkspaceOwner(userId);
+
+        allow update: if isValidDriveFile(incoming(), userId) &&
+          isVerified() &&
+          isValidId(userId) &&
+          isValidId(fileId) &&
+          existing().ownerId == request.auth.uid &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().workspaceId == existing().workspaceId &&
+          incoming().createdAt == existing().createdAt &&
+          incoming().updatedAt == request.time &&
+          incoming().diff(existing()).affectedKeys().hasOnly(['name', 'kind', 'folder', 'starred', 'updatedAt']) &&
+          isWorkspaceOwner(userId);
+
+        allow delete: if isVerified() &&
+          isValidId(userId) &&
+          isValidId(fileId) &&
+          existing().ownerId == request.auth.uid &&
+          isWorkspaceOwner(userId);
+      }
+
+      // Drive Folders Subcollection (Master Gate enforced)
+      match /folders/{folderId} {
+        allow get: if isSignedIn() &&
+          isValidId(userId) &&
+          isValidId(folderId) &&
+          existing().ownerId == request.auth.uid &&
+          isWorkspaceOwner(userId);
+
+        allow list: if isSignedIn() &&
+          request.auth.uid == userId &&
+          existing().ownerId == request.auth.uid &&
+          existing().workspaceId == userId;
+
+        allow create: if isVerified() &&
+          isValidId(userId) &&
+          isValidId(folderId) &&
+          isValidDriveFolder(incoming(), userId) &&
+          incoming().createdAt == request.time &&
+          incoming().updatedAt == request.time &&
+          isWorkspaceOwner(userId);
+
+        allow update: if isValidDriveFolder(incoming(), userId) &&
+          isVerified() &&
+          isValidId(userId) &&
+          isValidId(folderId) &&
+          existing().ownerId == request.auth.uid &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().workspaceId == existing().workspaceId &&
+          incoming().createdAt == existing().createdAt &&
+          incoming().updatedAt == request.time &&
+          incoming().diff(existing()).affectedKeys().hasOnly(['name', 'parent', 'color', 'updatedAt']) &&
+          isWorkspaceOwner(userId);
+
+        allow delete: if isVerified() &&
+          isValidId(userId) &&
+          isValidId(folderId) &&
+          existing().ownerId == request.auth.uid &&
+          isWorkspaceOwner(userId);
+      }
+    }
+  }
+}

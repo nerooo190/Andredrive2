@@ -1,0 +1,6 @@
+{
+  "name": "StratusCloud — Cloud Publishing & Edge Hosting Platform",
+  "description": "Full-stack cloud publishing, serverless container hosting, edge CDN routing, managed databases, environment secrets, and automated CI/CD deployment control plane.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

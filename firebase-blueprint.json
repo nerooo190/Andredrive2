@@ -1,0 +1,176 @@
+{
+  "entities": {
+    "Workspace": {
+      "title": "Workspace",
+      "description": "Root workspace metadata document owned by an authenticated AndreDrive user.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the workspace owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the workspace owner.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "rommServerUrl": {
+          "type": "string",
+          "description": "Configured RomM server URL.",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "rommFolderId": {
+          "type": "string",
+          "description": "Configured RomM folder ID.",
+          "minLength": 0,
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the workspace was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the workspace was last updated."
+        }
+      },
+      "required": ["ownerId", "displayName", "rommServerUrl", "rommFolderId", "createdAt", "updatedAt"]
+    },
+    "DriveFile": {
+      "title": "DriveFile",
+      "description": "A file item stored inside a user's AndreDrive workspace.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the file owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "workspaceId": {
+          "type": "string",
+          "description": "Parent workspace document ID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Filename with extension.",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "kind": {
+          "type": "string",
+          "description": "Category ID of the file.",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "mime": {
+          "type": "string",
+          "description": "MIME type of the file.",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the file in bytes."
+        },
+        "folder": {
+          "type": "string",
+          "description": "Folder ID or empty string if in root workspace.",
+          "minLength": 0,
+          "maxLength": 128
+        },
+        "starred": {
+          "type": "boolean",
+          "description": "Whether the file is marked as favorite."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the file record was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the file record was last updated."
+        }
+      },
+      "required": ["ownerId", "workspaceId", "name", "kind", "mime", "size", "folder", "starred", "createdAt", "updatedAt"]
+    },
+    "DriveFolder": {
+      "title": "DriveFolder",
+      "description": "A folder item inside a user's AndreDrive workspace.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the folder owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "workspaceId": {
+          "type": "string",
+          "description": "Parent workspace document ID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Folder display name.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "parent": {
+          "type": "string",
+          "description": "Parent folder ID or empty string for root.",
+          "minLength": 0,
+          "maxLength": 128
+        },
+        "color": {
+          "type": "string",
+          "description": "Folder badge color token.",
+          "enum": ["green", "purple", "orange", "blue"],
+          "minLength": 4,
+          "maxLength": 16
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the folder was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the folder was last updated."
+        }
+      },
+      "required": ["ownerId", "workspaceId", "name", "parent", "color", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/workspaces/{userId}": {
+      "schema": { "$ref": "#/entities/Workspace" },
+      "description": "Root workspace document per authenticated user."
+    },
+    "/workspaces/{userId}/files/{fileId}": {
+      "schema": { "$ref": "#/entities/DriveFile" },
+      "description": "Files belonging to the user's workspace."
+    },
+    "/workspaces/{userId}/folders/{folderId}": {
+      "schema": { "$ref": "#/entities/DriveFolder" },
+      "description": "Folders belonging to the user's workspace."
+    }
+  }
+}

@@ -1,0 +1,249 @@
+{
+  "activeUserId": "usr-andre-1",
+  "isLoggedIn": true,
+  "accounts": {
+    "usr-andre-1": {
+      "user": {
+        "id": "usr-andre-1",
+        "name": "Andre",
+        "email": "LPAndreU97@gmail.com"
+      },
+      "folders": [
+        {
+          "id": "d1",
+          "name": "Filme",
+          "parent": null,
+          "color": "green"
+        },
+        {
+          "id": "d2",
+          "name": "Serien",
+          "parent": null,
+          "color": "purple"
+        },
+        {
+          "id": "d3",
+          "name": "Reisen & Erinnerungen",
+          "parent": null,
+          "color": "orange"
+        },
+        {
+          "id": "d4",
+          "name": "Projekte",
+          "parent": null,
+          "color": "blue"
+        },
+        {
+          "id": "fld-9ef16b39a92f",
+          "name": "Tausend Meilen Staub",
+          "parent": "d2",
+          "color": "green"
+        },
+        {
+          "id": "fld-10e550cf976f",
+          "name": "Staffel 1",
+          "parent": "fld-9ef16b39a92f",
+          "color": "purple"
+        }
+      ],
+      "files": [
+        {
+          "id": "file-3681a4d3a1d6",
+          "name": "Tausend Meilen Staub  S01E05.mp4",
+          "size": 229835448,
+          "kind": "series",
+          "mime": "video/mp4",
+          "created": "2026-11-11T11:04:48.680Z",
+          "starred": false,
+          "folder": "fld-10e550cf976f",
+          "series": "Tausend Meilen Staub",
+          "season": 1,
+          "episode": 5,
+          "quality": "480p",
+          "duration": "48:37",
+          "image": "/api/tmdb/image?url=https%3A%2F%2Fstatic.tvmaze.com%2Fuploads%2Fimages%2Foriginal_untouched%2F139%2F347515.jpg",
+          "hls": "ready",
+          "metadata": {
+            "title": "Tausend Meilen Staub",
+            "original_title": "Rawhide",
+            "year": "1959",
+            "plot": "Ein ehemaliger Südstaaten-Offizier versucht, die Männer des Trecks für einen waghalsigen Plan an der Grenze zu gewinnen.",
+            "genres": "Western, Abenteuer, Drama, Serie",
+            "runtime_minutes": "49",
+            "rating": "8.3",
+            "director": "Charles Marquis Warren",
+            "cast": "Eric Fleming, Clint Eastwood, Paul Brinegar, Sheb Wooley, Steve Raines, James Murdock",
+            "country": "USA",
+            "language": "Deutsch / Englisch",
+            "tmdb_id": "10952",
+            "imdb_id": "tt0052504",
+            "poster_url": "/api/tmdb/image?url=https%3A%2F%2Fstatic.tvmaze.com%2Fuploads%2Fimages%2Foriginal_untouched%2F18%2F46291.jpg",
+            "poster_source": "url",
+            "episode_title": "An der Grenze der Macht (Incident on the Edge of Madness)",
+            "episode_image_url": "/api/tmdb/image?url=https%3A%2F%2Fstatic.tvmaze.com%2Fuploads%2Fimages%2Foriginal_untouched%2F139%2F347515.jpg"
+          },
+          "category_name": "Serien"
+        },
+        {
+          "id": "file-ce0f1c0a7ebe",
+          "name": "Tausend Meilen Staub S01E04.mp4",
+          "size": 236190158,
+          "kind": "series",
+          "mime": "video/mp4",
+          "created": "2026-11-11T11:05:48.629Z",
+          "starred": false,
+          "folder": "fld-10e550cf976f",
+          "series": "Tausend Meilen Staub",
+          "season": 1,
+          "episode": 4,
+          "quality": "480p",
+          "duration": "48:29",
+          "image": "/api/tmdb/image?url=https%3A%2F%2Fstatic.tvmaze.com%2Fuploads%2Fimages%2Foriginal_untouched%2F138%2F345912.jpg",
+          "hls": "ready",
+          "metadata": {
+            "title": "Tausend Meilen Staub",
+            "original_title": "Rawhide",
+            "year": "1959",
+            "plot": "Gil Favor und Rowdy Yates nehmen eine Witwe unter ihren Schutz, die auf der Flucht vor skrupellosen Verfolgern Zuflucht beim Rindertreck sucht.",
+            "genres": "Western, Abenteuer, Drama, Serie",
+            "runtime_minutes": "49",
+            "rating": "8.3",
+            "director": "Charles Marquis Warren",
+            "cast": "Eric Fleming, Clint Eastwood, Paul Brinegar, Sheb Wooley, Steve Raines, James Murdock",
+            "country": "USA",
+            "language": "Deutsch / Englisch",
+            "tmdb_id": "10952",
+            "imdb_id": "tt0052504",
+            "poster_url": "/api/tmdb/image?url=https%3A%2F%2Fstatic.tvmaze.com%2Fuploads%2Fimages%2Foriginal_untouched%2F18%2F46291.jpg",
+            "poster_source": "url",
+            "episode_title": "Am Rande des Abgrunds (Incident of the Widowed Dove)",
+            "episode_image_url": "/api/tmdb/image?url=https%3A%2F%2Fstatic.tvmaze.com%2Fuploads%2Fimages%2Foriginal_untouched%2F138%2F345912.jpg"
+          },
+          "category_name": "Serien"
+        },
+        {
+          "id": "file-9660a0b669fe",
+          "name": "Tausend Meilen Staub S01E02.mp4",
+          "size": 399999471,
+          "kind": "series",
+          "mime": "video/mp4",
+          "created": "2026-11-11T11:06:11.659Z",
+          "starred": false,
+          "folder": "fld-10e550cf976f",
+          "series": "Tausend Meilen Staub",
+          "season": 1,
+          "episode": 2,
+          "quality": "480p",
+          "duration": "48:55",
+          "image": "/api/tmdb/image?url=https%3A%2F%2Fstatic.tvmaze.com%2Fuploads%2Fimages%2Foriginal_untouched%2F136%2F341971.jpg",
+          "hls": "ready",
+          "metadata": {
+            "title": "Tausend Meilen Staub",
+            "original_title": "Rawhide",
+            "year": "1959",
+            "plot": "Auf dem Weg durch die Hochebene von Alabaster geraten Gil Favor und Rowdy Yates in einen gefährlichen Konflikt rund um ein altes Kloster und verfolgte Gesetzlose.",
+            "genres": "Western, Abenteuer, Drama, Serie",
+            "runtime_minutes": "49",
+            "rating": "8.3",
+            "director": "Charles Marquis Warren",
+            "cast": "Eric Fleming, Clint Eastwood, Paul Brinegar, Sheb Wooley, Steve Raines, James Murdock",
+            "country": "USA",
+            "language": "Deutsch / Englisch",
+            "tmdb_id": "10952",
+            "imdb_id": "tt0052504",
+            "poster_url": "/api/tmdb/image?url=https%3A%2F%2Fstatic.tvmaze.com%2Fuploads%2Fimages%2Foriginal_untouched%2F18%2F46291.jpg",
+            "poster_source": "url",
+            "episode_title": "Unruhe in Alamosa (Incident at Alabaster Plain)",
+            "episode_image_url": "/api/tmdb/image?url=https%3A%2F%2Fstatic.tvmaze.com%2Fuploads%2Fimages%2Foriginal_untouched%2F136%2F341971.jpg"
+          },
+          "category_name": "Serien"
+        },
+        {
+          "id": "file-4b2bbc107af9",
+          "name": "Tausend Meilen Staub S01E01.mp4",
+          "size": 572116508,
+          "kind": "series",
+          "mime": "video/mp4",
+          "created": "2026-11-11T11:06:41.024Z",
+          "starred": false,
+          "folder": "fld-10e550cf976f",
+          "series": "Tausend Meilen Staub",
+          "season": 1,
+          "episode": 1,
+          "quality": "1080p",
+          "duration": "49:11",
+          "image": "/api/tmdb/image?url=https%3A%2F%2Fstatic.tvmaze.com%2Fuploads%2Fimages%2Foriginal_untouched%2F135%2F339979.jpg",
+          "hls": "ready",
+          "metadata": {
+            "title": "Tausend Meilen Staub",
+            "original_title": "Rawhide",
+            "year": "1959",
+            "plot": "Trailboss Gil Favor und sein Stellvertreter Rowdy Yates (Clint Eastwood) begegnen zu Beginn des Rindertrecks einer Gefangenentransport-Kutsche, deren Insassen den gesamten Treck in Gefahr bringen.",
+            "genres": "Western, Abenteuer, Drama, Serie",
+            "runtime_minutes": "49",
+            "rating": "8.3",
+            "director": "Charles Marquis Warren",
+            "cast": "Eric Fleming, Clint Eastwood, Paul Brinegar, Sheb Wooley, Steve Raines, James Murdock",
+            "country": "USA",
+            "language": "Deutsch / Englisch",
+            "tmdb_id": "10952",
+            "imdb_id": "tt0052504",
+            "poster_url": "/api/tmdb/image?url=https%3A%2F%2Fstatic.tvmaze.com%2Fuploads%2Fimages%2Foriginal_untouched%2F18%2F46291.jpg",
+            "poster_source": "url",
+            "episode_title": "Fluch des Goldes (Incident of the Tumbleweed)",
+            "episode_image_url": "/api/tmdb/image?url=https%3A%2F%2Fstatic.tvmaze.com%2Fuploads%2Fimages%2Foriginal_untouched%2F135%2F339979.jpg"
+          },
+          "category_name": "Serien"
+        }
+      ],
+      "trashedFiles": [],
+      "customCategories": [],
+      "links": [],
+      "fileBuffersBase64": {},
+      "jellyfinAccounts": [],
+      "jellyfinSessions": {
+        "36163696e8430b5bfaebeffe7c4ec4aab2f9a263d934dfeb": {
+          "token": "36163696e8430b5bfaebeffe7c4ec4aab2f9a263d934dfeb",
+          "accountId": "7c093576c5db989d0c30cdfce760e941",
+          "userId": "81e13172123d6b615c578c5e01af1c61",
+          "username": "jf_f9ce1fa40d",
+          "deviceId": "moonfin-1",
+          "client": "Moonfin",
+          "deviceName": "Android TV",
+          "version": "1.0.0",
+          "created": "2026-11-11T12:50:22.296Z"
+        }
+      },
+      "jellyfinUserState": {},
+      "navidromeAccounts": [],
+      "opdsAccounts": [],
+      "audiobookshelfAccounts": [],
+      "webdavAccounts": [],
+      "rommSettings": {
+        "server_url": "http://steamdeck.local:8080",
+        "folder_id": "d4"
+      },
+      "tmdbSettings": {
+        "configured": true,
+        "personal": false
+      },
+      "cloudConnections": [
+        {
+          "id": "conn-torbox-1",
+          "provider": "torbox",
+          "label": "TorBox Cloud Seedbox",
+          "canMove": true,
+          "created": "2026-11-01T12:00:00Z"
+        },
+        {
+          "id": "conn-gdrive-1",
+          "provider": "google-drive",
+          "label": "Google Drive (LPAndreU97@gmail.com)",
+          "canMove": false,
+          "created": "2026-11-01T14:00:00Z"
+        }
+      ],
+      "cloudTransfers": []
+    }
+  }
+}
